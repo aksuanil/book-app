@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { getBooksByTitle, getBooksBySubject, getBooksByAuthor } from '../services/googleApi'
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import LoadingButton from '@mui/lab/LoadingButton';
 import BookCard from '../components/BookCard';
+import ReadingDoodle from '../assets/images/ReadingDoodle.png'
+import SitReadingDoodle from '../assets/images/SitReadingDoodle.png'
+import { InputAdornment, MenuItem, TextField } from '@mui/material'
 
 export default function Home() {
     const [gridItems, setGridItems] = useState(null);
     const [searchValue, setSearchValue] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     const [isBookmarked, setIsBookmarked] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             const result = await getBooksByTitle(searchValue);
-            console.log(result.items[0]?.volumeInfo.title)
             setGridItems(result);
         }
         fetchData()
@@ -26,13 +25,6 @@ export default function Home() {
     const handleChange = (e) => {
         e.preventDefault();
         setSearchValue(e.target.value);
-    }
-    const handleSubmit = async (e) => {
-        setIsLoading(true);
-        e.preventDefault();
-        const result = await getBooksByTitle(searchValue);
-        setIsLoading(false);
-        setGridItems(result);
     }
 
     const Item = styled(Paper)(({ theme }) => ({
@@ -44,44 +36,37 @@ export default function Home() {
     }));
 
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <div className='flex gap-6 justify-center'>
+        <div>
+            <div className='flex flex-col md:flex-row justify-between md:mt-16 gap-4 md:gap-0'>
+                <img className='w-80 md:w-96 mx-auto' src={ReadingDoodle}></img>
+                <form className='px-8 md:px-0 my-auto' action="/search" method="GET">
                     <TextField
+                        fullWidth
                         onChange={handleChange}
                         value={searchValue}
                         id="standard-search"
                         label="Search a book"
                         type="search"
                         variant="standard"
+                        name='book'
                     />
                     <TextField
+                        fullWidth
                         id="standard-search"
                         label="Search an author"
                         type="search"
                         variant="standard"
+                        name="author"
                     />
-                </div>
-                <div className='flex justify-center'>
-                    <LoadingButton type='submit' loading={isLoading} loadingIndicator="Searching..." variant="outlined">
-                        Search!
-                    </LoadingButton>
-                </div>
-            </form>
-            {gridItems &&
-                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                    {Array.from(Array(6)).map((_, index) => (
-                        <Grid item xs={12} sm={4} md={4} key={index}>
-                            <BookCard bookData= {gridItems.items[index].volumeInfo} isBookmarked={isBookmarked} />
-                            {/* <Item>{gridItems.items[index].volumeInfo.title}</Item>
-                            <Item>{gridItems.items[index].volumeInfo.authors}</Item>
-                            <Item>{gridItems.items[index].volumeInfo.publishedDate}</Item>
-                            <Item><img src={gridItems.items[index].volumeInfo.imageLinks.thumbnail} alt='thumbnail' /></Item>
-                            <Item>{gridItems.items[index].volumeInfo.language}</Item> */}
-                        </Grid>
-                    ))}
-                </Grid>
-            }
-        </>
+                    <div className='flex justify-center mt-8'>
+                        <button type='submit' className='border-2 p-2'>
+                            Search!
+                        </button >
+                    </div>
+                </form>
+                <img className='w-80 md:w-96 mx-auto' src={SitReadingDoodle}></img>
+            </div>
+        </div>
+
     )
 }

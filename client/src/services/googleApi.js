@@ -1,10 +1,10 @@
 import { axiosRequest } from "./api";
 
-const API_KEY = 'AIzaSyD7T0qT0mxxB_9wJ6YxRouqqNB01Sv1gMk';
+const API_KEY = 'AIzaSyCdGd1z98FSKNzgnlxGmjr70HWeN-EuYcg';
 
 const getBooksByTitle = async (title) => {
     try {
-        const response = await axiosRequest.get(`?q=${title}+intitle&key=${API_KEY}`)
+        const response = await axiosRequest.get(`?q=${title}+intitle&orderBy=relevance&key=${API_KEY}`)
         return response.data;
     } catch (error) {
         console.log(error.response);

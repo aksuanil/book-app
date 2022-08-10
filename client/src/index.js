@@ -4,11 +4,29 @@ import './index.css';
 import Home from './pages/Home';
 import reportWebVitals from './reportWebVitals';
 import '../src/assets/css/output.css';
+import Header from './components/Header';
+import Bookmarks from './pages/Bookmarks';
+import Search from './pages/Search';
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BookmarkProvider } from './context/BookmarkProvider';
+// import NoPage from './pages/NoPage/NoPage';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Home />
+    <BookmarkProvider>
+      <Header />
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="search" element={<Search />} />
+          <Route path="bookmarks" element={<Bookmarks />} />
+          {/* <Route path="*" element={<NoPage />} /> */}
+        </Routes>
+      </BrowserRouter>
+    </BookmarkProvider>
   </React.StrictMode>
 );
 
