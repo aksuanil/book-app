@@ -1,22 +1,24 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import ImageListItem from '@mui/material/ImageListItem';
-import { addBookmarkToDb, deleteBookmarkFromDb } from '../services/serverApi.js'
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteBookmarkFromDb } from '../services/serverApi.js'
 
 import { BookmarkContext, BookmarkTriggerContext } from '../context/BookmarkProvider';
 
 
 export default function Bookmarks() {
 
-  const bookmarkList = React.useContext(BookmarkContext);
+  const bookmarkList = useContext(BookmarkContext);
   const setContextTrigger = useContext(BookmarkTriggerContext);
 
-  function handleDeleteClick(id) {
+  const [page, setPage] = useState(1);
+
+  const handleDeleteClick = (id) => {
     deleteBookmarkFromDb(id).then(res => {
       setContextTrigger(Math.random());
     }).catch(err => {
@@ -24,42 +26,69 @@ export default function Bookmarks() {
     })
   }
 
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
   return (
-    <List sx={{ marginX: { xs: 4, md: 20, lg: 40, xl: 50 } }} >
-      {bookmarkList.map((bookmark, index) => (
-        <div className='flex mb-8 '>
-          <ListItem key={index} alignItems="flex-start" sx={{ padding: { xs: 1, sm: 1, md: 2 }, borderRadius: '20px 0px 0px 20px', bgcolor: 'white', boxShadow: '0px 4px 10px black;', border: 1 }}>
-            <div className='w-40'>
-              <img src={bookmark.thumbnail} />
+    <>
+      <List sx={{ marginX: { xs: 4, md: 20, lg: 40, xl: 50 }, paddingY: 6 }} >
+        {bookmarkList === null || bookmarkList.length === 0
+          ?
+          <Typography variant='h5' sx={{ textAlign: 'center' }}>
+            You have no bookmarks.
+          </Typography>
+          :
+          bookmarkList.slice((page * 5) - 5, page * 5).map((bookmark, index) => (
+            <div className='flex mb-8 '>
+              <ListItem
+                key={index}
+                alignItems="flex-start"
+                sx={{
+                  padding: { xs: 1, sm: 1, md: 2 },
+                  borderRadius: '20px 0px 0px 20px',
+                  bgcolor: 'white',
+                  boxShadow: '0px 4px 10px black;',
+                  border: 1
+                }}>
+                <div className='w-40'>
+                  <img src={bookmark.thumbnail} />
+                </div>
+                <ListItemText
+                  primary={bookmark.title}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        className="inline"
+                        color="textPrimary"
+                      >
+                        {bookmark.author}
+                      </Typography>
+                      {' — '}
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        className="inline"
+                        color="textPrimary"
+                      >
+                        {bookmark.publishedDate}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+              <button className='bg-red-400 hover:bg-red-600 border-red-600 hover:border-red-800 border-b-4 transition-all h-16 text-lg font-semibold shadow-lg hover:shadow-2xl hover:shadow-black p-2 rounded-r-md'
+                onClick={() => handleDeleteClick(bookmark.book_id)}>
+                <DeleteIcon sx={{ fontSize: 30, color: 'white' }} />
+              </button>
             </div>
-            <ListItemText
-              primary={bookmark.title}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className="inline"
-                    color="textPrimary"
-                  >
-                    {bookmark.author}
-                  </Typography>
-                  {' — '}
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className="inline"
-                    color="textPrimary"
-                  >
-                    {bookmark.publishedDate}
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <button className='bg-red-700 hover:bg-red-600 transition-all h-16 text-lg font-semibold hover:shadow-2xl hover:shadow-black p-2 rounded-r-md' onClick={() => handleDeleteClick(bookmark.book_id)}>Remove</button>
-        </div>
-      ))}
-    </List>
+          ))}
+      </List>
+      <Stack spacing={2} padding={4} sx={{ alignItems: 'end' }}>
+        <Pagination count={Math.ceil(bookmarkList.length / 5)} size='large' variant="outlined" shape="rounded" page={page} onChange={handlePageChange} />
+      </Stack>
+    </>
   );
 }

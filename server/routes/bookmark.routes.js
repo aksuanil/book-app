@@ -3,7 +3,6 @@ module.exports = app => {
     var router = require("express").Router();
     router.post("/", bookmark.create);
     router.get("/", bookmark.findAll);
-    router.get("/:id", bookmark.findOne);
     router.delete("/:id", bookmark.delete);
     router.delete("/", bookmark.deleteAll);
 

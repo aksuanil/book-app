@@ -1,54 +1,51 @@
 import React, { useEffect, useState } from 'react'
-import { getBooksByTitle, getBooksBySubject, getBooksByAuthor } from '../services/googleApi'
+import { getBooksBySearch, getBooksBySubject, getBooksByAuthor } from '../services/googleApi'
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import BookCard from '../components/BookCard';
 import Spinner from '../components/Spinner';
 import { useSearchParams } from "react-router-dom";
-import PaginationRounded from '../components/Pagination';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 export default function Search() {
     const [searchParams, setSearchParams] = useSearchParams();
-    const book = searchParams.get("book")
-    const author = searchParams.get("author")
-
+    const search = searchParams.get("book")
+    const numberOfShownResults = 9;
     const [gridItems, setGridItems] = useState(null);
-    const [searchValue, setSearchValue] = useState('');
-    const [isBookmarked, setIsBookmarked] = useState(false);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         const fetchData = async () => {
-            if (book) {
-                const result = await getBooksByTitle(book);
-                setGridItems(result);
-            } else if (author) {
-                const result = await getBooksByAuthor(author);
+            if (search) {
+                setGridItems(null);
+                const result = await getBooksBySearch(search, page * 10);
                 setGridItems(result);
             }
         }
         fetchData()
             .catch(console.error);
-    }, [searchParams])
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#ccc',
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    }));
+    }, [searchParams, page])
+
+    const handlePageChange = (event, value) => {
+        setPage(value);
+    };
+
     return (
         <>
             {gridItems ?
                 <>
-                    <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 12 }} sx={{ paddingX: 10}}>
-                        {Array.from(Array(9)).map((_, index) => (
-                            <Grid item xs={12} sm={4} md={4} key={index}>
-                                <BookCard id={gridItems.items[index].id} bookData={gridItems.items[index].volumeInfo} isBookmarked={true} />
+                    <Grid container spacing={{ xs: 4, md: 4 }} columns={{ xs: 4, sm: 8, md: 12, lg: 12 }} sx={{ paddingX: 8, justifyContent: 'center', paddingTop: 6 }}>
+                        {Array.from(Array(numberOfShownResults)).map((_, index) => (
+                            <Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                                <BookCard id={gridItems.items[index]?.id} bookData={gridItems.items[index]?.volumeInfo} />
                             </Grid>
                         ))}
                     </Grid>
-                    <PaginationRounded />
+                    <Stack spacing={2} padding={4} sx={{ alignItems: 'end' }}>
+                        <Pagination count={Math.ceil(gridItems?.totalItems / numberOfShownResults)} size='large' variant="outlined" shape="rounded" page={page} onChange={handlePageChange} />
+                    </Stack>
                 </>
                 :
                 <Spinner />

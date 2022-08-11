@@ -13,7 +13,6 @@ export const addBookmarkToDb = async (bookId, thumbnail, title, author, publishD
 
 export const deleteBookmarkFromDb = async (bookId) => {
     try {
-        debugger
         const response = await axiosRequest.delete(BASE_URL + bookId, { id: bookId });
         return response.data;
     } catch (error) {
