@@ -30,7 +30,7 @@ client
 server
     +---+
         |
-        +-- config          # all the global configuration, env variables etc. get exported from here and used in the app
+        +-- config          # all the global configuration, env variables etc. get exported from here
         |
         +-- controllers     # controller functions, crud operations etc.
         |
@@ -45,7 +45,7 @@ server
 Make sure to install up-to-date versions of;
 
 node.js\
-MySql Server\
+MySql Server
 
 ### Installing
 
@@ -59,9 +59,9 @@ MySql Server\
    ```
 3. cd back and repeat the same process for `/client` directory;
 
-4. Create `.env` file in the `/server` directory to provide database informations.\
+4. Create `.env` file in the `/server` directory to provide database informations.
 
-5. Provide below informations according to your database configurations;\
+5. Provide below informations according to your database configurations;
     ```
     HOST= "localhost"
     USER= "root"
