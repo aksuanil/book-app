@@ -7,63 +7,60 @@
 
 ## About <a name = "about"></a>
 Bookmark App is very straightforward fullstack application powered by Google's BookAPI. 
-## Getting Started <a name = "getting_started"></a>
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
 ## Project Structure <a name = "project-structure"></a>
 
-Most of the code lives in the client/src folder and looks like this:
+Most of the code lives in 'client/src' and 'service' folders and looks like this:
 
 ```sh
 client
     +--src
         |
-        +-- assets             # assets folder can contain all the static files such as images, fonts, etc.
+        +-- assets          # assets folder can contain all the static files such as images, fonts, etc.
         |
-        +-- components         # shared components used across the entire application
+        +-- components      # shared components used across the entire application
         |
-        +-- context            # all the global configuration, env variables etc. get exported from here and used in the app
+        +-- context         # all the global configuration. get exported from here and used in the app
         |
-        +-- helpers            # shared helper functions
+        +-- helpers         # shared helper functions
         |
-        +-- pages              # shared hooks used across the entire application
+        +-- pages           # page components of the application
         |
-        +-- services           # re-exporting different libraries preconfigured for the application
+        +-- services        # shared api calls across the project
 server
     +---+
         |
-        +-- config             # all the global configuration, env variables etc. get exported from here and used in the app
+        +-- config          # all the global configuration, env variables etc. get exported from here and used in the app
         |
-        +-- controllers        # feature based modules
+        +-- controllers     # controller functions, crud operations etc.
         |
-        +-- models             # shared hooks used across the entire application
+        +-- models          # database models
         |
-        +-- routes             # shared hooks used across the entire application
+        +-- routes          # shared hooks used across the entire application
 ```
 
 
 ### Prerequisites
 
-Up-to-date versions of;
+make sure to install up-to-date versions of;
 
-node.js
-npm
-MySql Server
+node.js__
+MySql Server__
 
 ### Installing
 
-1- cd into 'server' from root folder of the project.
-2- Run 'npm i' to install npm dependencies in the 'server' directory.
-3- Repeat the same process for client side by running 'npm i' in the 'client' directory.
-4- Create '.env' file in the server directory to provide database informations.
-5- Provide below informations according to your database configurations;
+1- cd into 'server' from root folder of the project.__
+2- Run 'npm i' to install npm dependencies in the 'server' directory.__
+3- Repeat the same process for client side by running 'npm i' in the 'client' directory.__
+4- Create '.env' file in the server directory to provide database informations.__
+5- Provide below informations according to your database configurations;__
 ```
 HOST= "localhost"
 USER= "root"
 PASSWORD= "PASSWORD"
 DB= "DBNAME"
 ```
-6- Start both server and client side applications with 'npm start' command in their root root directories.
+6- Start both server and client side applications seperately with 'npm start' command in their root directories.
 
 
 ## Usage <a name = "usage"></a>
