@@ -44,16 +44,16 @@ server
 
 make sure to install up-to-date versions of;
 
-node.js__
-MySql Server__
+node.js\
+MySql Server\
 
 ### Installing
 
-1- cd into 'server' from root folder of the project.__
-2- Run 'npm i' to install npm dependencies in the 'server' directory.__
-3- Repeat the same process for client side by running 'npm i' in the 'client' directory.__
-4- Create '.env' file in the server directory to provide database informations.__
-5- Provide below informations according to your database configurations;__
+1- cd into 'server' from root folder of the project.\
+2- Run 'npm i' to install npm dependencies in the 'server' directory.\
+3- Repeat the same process for client side by running 'npm i' in the 'client' directory.\
+4- Create '.env' file in the server directory to provide database informations.\
+5- Provide below informations according to your database configurations;\
 ```
 HOST= "localhost"
 USER= "root"
