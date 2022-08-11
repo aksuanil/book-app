@@ -5,7 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from '../assets/icons/delete.svg';
 import { deleteBookmarkFromDb } from '../services/serverApi.js'
 
 import { BookmarkContext, BookmarkTriggerContext } from '../context/BookmarkProvider';
@@ -15,7 +15,6 @@ export default function Bookmarks() {
 
   const bookmarkList = useContext(BookmarkContext);
   const setContextTrigger = useContext(BookmarkTriggerContext);
-
   const [page, setPage] = useState(1);
 
   const handleDeleteClick = (id) => {
@@ -49,11 +48,12 @@ export default function Bookmarks() {
                   borderRadius: '20px 0px 0px 20px',
                   bgcolor: 'white',
                   boxShadow: '0px 4px 10px black;',
-                  border: 1
+                  border: 1,
+                  flex: 1,
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  gap: { xs: 1, sm: 2 }
                 }}>
-                <div className='w-40'>
-                  <img src={bookmark.thumbnail} />
-                </div>
+                <img className='rounded-md w-36 self-center' src={bookmark.thumbnail} alt='thumbnail' />
                 <ListItemText
                   primary={bookmark.title}
                   secondary={
@@ -81,7 +81,7 @@ export default function Bookmarks() {
               </ListItem>
               <button className='bg-red-400 hover:bg-red-600 border-red-600 hover:border-red-800 border-b-4 transition-all h-16 text-lg font-semibold shadow-lg hover:shadow-2xl hover:shadow-black p-2 rounded-r-md'
                 onClick={() => handleDeleteClick(bookmark.book_id)}>
-                <DeleteIcon sx={{ fontSize: 30, color: 'white' }} />
+                <img src={DeleteIcon} alt='delete' className='w-10 h-8' />
               </button>
             </div>
           ))}

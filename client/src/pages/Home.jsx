@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TextField } from '@mui/material'
 import ReadingDoodle from '../assets/images/ReadingDoodle.png'
 import SitReadingDoodle from '../assets/images/SitReadingDoodle.png'
@@ -10,12 +10,14 @@ export default function Home() {
             <form className='px-8 md:px-0 m-auto w-1/2 min-w-[260px] ' action="/search" method="GET">
                 <TextField
                     fullWidth
+                    color='warning'
                     id="standard-search"
                     label="Search a book or an author"
                     type="search"
                     variant="standard"
                     name='book'
                     autoComplete='off'
+                    required
                 />
                 <div className='flex justify-center mt-8'>
                     <button type='submit' className='border-b-4 p-2 rounded-md w-28 self-end transition-all bg-slate-300 border-slate-400 hover:shadow-md hover:bg-slate-400 hover:border-slate-600'>

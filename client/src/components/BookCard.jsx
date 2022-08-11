@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { shortenDescription } from '../helpers/booksHelper';
 import Typography from '@mui/material/Typography';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import BookmarkAddIcon from '../assets/icons/bookmark-add.svg';
+import BookmarkAddedIcon from '../assets/icons/bookmark-added.svg';
 import { addBookmarkToDb, deleteBookmarkFromDb } from '../services/serverApi.js'
 import { BookmarkContext, BookmarkTriggerContext } from '../context/BookmarkProvider';
 
@@ -17,12 +17,13 @@ export default function BookCard(props) {
     const { id } = props;
 
     useEffect(() => {
+        //to check if book is bookmarked when indexing the results
         if (bookmarkList && bookmarkList.find(bookmark => bookmark.book_id === id)) {
             setIsBookmarked(true);
         } else {
             setIsBookmarked(false);
         }
-    }, [bookmarkList]);
+    }, [bookmarkList, id]);
 
     const handleBookmarkClick = () => {
         if (isBookmarked) {
@@ -34,7 +35,7 @@ export default function BookCard(props) {
                 console.log(err);
             })
         } else {
-            addBookmarkToDb(id, imageLinks.thumbnail, title, authors[0], publishedDate).then(res => {
+            addBookmarkToDb(id, imageLinks.thumbnail, title, (authors ? authors[0] : 'No author info'), publishedDate).then(res => {
                 setIsBookmarked(true);
                 //to trigger the update of the bookmark list in the context
                 setContextTrigger(Math.random());
@@ -44,68 +45,50 @@ export default function BookCard(props) {
         }
     }
     return (
-        <>
-            <div className='flex bg-[#dad3c5] border-2 border-[#ccb379] shadow-xl h-64 w-auto rounded-lg relative'>
-                {isBookmarked
-                    ?
-                    <button onClick={() => handleBookmarkClick()} >
-                        <BookmarkAddedIcon color="#0c1933" sx={{
-                            filter: 'drop-shadow(0px 0px 8px )',
-                            position: 'absolute',
-                            top: '-20px',
-                            right: '3px',
-                            zIndex: 10,
-                            fontSize: 50,
-                            color: "#162e5e",
-                            '&:hover': {
-                                color: '#284c94',
-                            },
-                        }} />
-                    </button>
-                    :
-                    <button onClick={() => handleBookmarkClick()} >
-                        <BookmarkAddIcon sx={{
-                            filter: 'drop-shadow(0px 0px 8px )',
-                            position: 'absolute',
-                            top: '-20px',
-                            right: '3px',
-                            Index: 10,
-                            fontSize: 50,
-                            color: '#1e5c17',
-                            '&:hover': {
-                                color: '#11330d',
-                            },
-                        }} />
-                    </button>
-                }
-                <img className='max-w-[170px] rounded-l-md' src={imageLinks?.thumbnail} alt={title} />
-                <div className='flex flex-col gap-2 p-4'>
-                    <Typography
-                        variant="subtitle2"
-                        className="inline"
-                        color="textPrimary"
-                    >
-                        {title}
-                    </Typography>
-                    <Typography
-                        variant="overline"
-                        className="inline"
-                        color="textPrimary"
-                    >
-                        {authors ? authors[0] : 'No author info'}
-                    </Typography>
-                    <Typography
-                        variant="caption"
-                        className="inline"
-                        color="textPrimary"
-                        sx={{
-                            marginTop: 'auto'
-                        }}
-                    >
-                        {shortenDescription(description)}
-                    </Typography>
-                </div>
+        <div className='flex bg-[#dad3c5] border-2 border-[#ccb379] shadow-xl h-64 w-auto rounded-lg relative '>
+            {isBookmarked
+                ?
+                <button onClick={() => handleBookmarkClick()} >
+                    <img src={BookmarkAddedIcon} alt='bookmark' className='w-14 h-14 p-1 absolute -top-[26px] right-2 z-10 bg-gradient-to-t from-transparent via-transparent to-blue-600 rounded-full transition-all' />
+                </button>
+                :
+                <button onClick={() => handleBookmarkClick()} >
+                    <img src={BookmarkAddIcon} alt='bookmark' className='w-14 h-14 p-1 absolute -top-[26px] right-2 z-10 bg-gradient-to-t from-transparent via-transparent to-green-600 rounded-full transition-all' />
+                </button>
+            }
+            <img className='max-w-[160px] rounded-l-md' src={imageLinks?.thumbnail} alt={title} />
+            <div className='flex flex-col gap-2 p-4'>
+                <Typography
+                    variant="h6"
+                    className="inline"
+                    color="textPrimary"
+                >
+                    {title}
+                </Typography>
+                <Typography
+                    variant="overline"
+                    className="inline"
+                    color="textPrimary"
+                    sx={{
+                        lineHeight: 1.5,
+                    }}
+                >
+                    {authors ? authors[0] : 'No author info'}
+                </Typography>
+                <Typography
+                    variant="caption"
+                    className="inline"
+                    color="textPrimary"
+                    sx={{
+                        marginTop: 'auto',
+                        overflow: 'hidden',
+                    }}
+                >
+                    {shortenDescription(description)}
+                </Typography>
             </div>
-        </>
+        </div>
     );
 }
+
+

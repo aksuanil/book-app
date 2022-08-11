@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { getBooksBySearch, getBooksBySubject, getBooksByAuthor } from '../services/googleApi'
-import { styled } from '@mui/material/styles';
+import { getBooksBySearch } from '../services/googleApi'
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import BookCard from '../components/BookCard';
 import Spinner from '../components/Spinner';
 import { useSearchParams } from "react-router-dom";
@@ -10,7 +8,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 export default function Search() {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const search = searchParams.get("book")
     const numberOfShownResults = 9;
     const [gridItems, setGridItems] = useState(null);
@@ -26,7 +24,7 @@ export default function Search() {
         }
         fetchData()
             .catch(console.error);
-    }, [searchParams, page])
+    }, [searchParams, page, search])
 
     const handlePageChange = (event, value) => {
         setPage(value);
