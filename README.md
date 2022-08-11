@@ -42,26 +42,36 @@ server
 
 ### Prerequisites
 
-make sure to install up-to-date versions of;
+Make sure to install up-to-date versions of;
 
-node.js__
-MySql Server__
+node.js\
+MySql Server\
 
 ### Installing
 
-1- cd into 'server' from root folder of the project.__
-2- Run 'npm i' to install npm dependencies in the 'server' directory.__
-3- Repeat the same process for client side by running 'npm i' in the 'client' directory.__
-4- Create '.env' file in the server directory to provide database informations.__
-5- Provide below informations according to your database configurations;__
-```
-HOST= "localhost"
-USER= "root"
-PASSWORD= "PASSWORD"
-DB= "DBNAME"
-```
-6- Start both server and client side applications seperately with 'npm start' command in their root directories.
+1. Clone the repo
+   ```sh
+   git clone https://github.com/aksuanil/book-app.git
+   ```
+2. cd into `/server` and install NPM packages with;
+   ```sh
+   npm install
+   ```
+3. cd back and repeat the same process for `/client` directory;
 
+4. Create `.env` file in the `/server` directory to provide database informations.\
+
+5. Provide below informations according to your database configurations;\
+    ```
+    HOST= "localhost"
+    USER= "root"
+    PASSWORD= "PASSWORD"
+    DB= "DBNAME"
+    ```
+6. Start both server and client side applications seperately with 'npm start' command in their root directories.
+   ```sh
+   npm start
+   ```
 
 ## Usage <a name = "usage"></a>
 
