@@ -35,7 +35,7 @@ export default function BookCard(props) {
                 console.log(err);
             })
         } else {
-            addBookmarkToDb(id, imageLinks.thumbnail, title, (authors ? authors[0] : 'No author info'), publishedDate).then(res => {
+            addBookmarkToDb(id, imageLinks?.thumbnail, title, (authors ? authors[0] : 'No author info'), publishedDate).then(res => {
                 setIsBookmarked(true);
                 //to trigger the update of the bookmark list in the context
                 setContextTrigger(Math.random());
@@ -49,11 +49,11 @@ export default function BookCard(props) {
             {isBookmarked
                 ?
                 <button onClick={() => handleBookmarkClick()} >
-                    <img src={BookmarkAddedIcon} alt='bookmark' className='w-14 h-14 p-1 absolute -top-[26px] right-2 z-10 bg-gradient-to-t from-transparent via-transparent to-blue-600 rounded-full transition-all' />
+                    <img src={BookmarkAddedIcon} alt='bookmark' className='hover:bg-blue-500 w-14 h-14 p-1 absolute -top-[26px] right-2 z-10 bg-gradient-to-t from-transparent via-transparent to-blue-600 rounded-full transition-all' />
                 </button>
                 :
                 <button onClick={() => handleBookmarkClick()} >
-                    <img src={BookmarkAddIcon} alt='bookmark' className='w-14 h-14 p-1 absolute -top-[26px] right-2 z-10 bg-gradient-to-t from-transparent via-transparent to-green-600 rounded-full transition-all' />
+                    <img src={BookmarkAddIcon} alt='bookmark' className='hover:bg-green-500 rounded-full w-14 h-14 p-1 absolute -top-[26px] right-2 z-10 bg-gradient-to-t from-transparent via-transparent to-green-600 transition-all' />
                 </button>
             }
             <img className='max-w-[160px] rounded-l-md' src={imageLinks?.thumbnail} alt={title} />

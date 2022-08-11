@@ -33,7 +33,7 @@ export default function Header() {
                         :
                         <form className='flex w-full sm:w-2/3 md:w-1/2 justify-center px-4' action="/search" method="GET">
                             <TextField
-                                color='warning'
+                                color='error'
                                 required
                                 id="standard-search"
                                 label="Search a book or an author"
