@@ -36,7 +36,7 @@ server
         |
         +-- models          # database models
         |
-        +-- routes          # shared hooks used across the entire application
+        +-- routes          # defining route paths to access related controllers
 ```
 
 
