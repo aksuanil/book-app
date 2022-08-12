@@ -10,7 +10,7 @@ Bookmark App is very straightforward fullstack application powered by Google's B
 
 ## Project Structure <a name = "project-structure"></a>
 
-Most of the code lives in 'client/src' and 'service' folders and looks like this:
+Most of the code lives in 'client/src' and 'server' folders and looks like this:
 
 ```sh
 client
@@ -44,7 +44,7 @@ server
 
 Make sure to install up-to-date versions of;
 
-* node.js\
+* node.js
 * MySql Server
 
 ### Installing <a name = "install"></a>
