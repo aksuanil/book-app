@@ -2,7 +2,7 @@
 
 ## Table of Contents
 + [About](#about)
-+ [Installation](#getting_started)
++ [Installation](#install)
 + [Usage](#usage)
 
 ## About <a name = "about"></a>
@@ -44,10 +44,10 @@ server
 
 Make sure to install up-to-date versions of;
 
-node.js\
-MySql Server
+* node.js\
+* MySql Server
 
-### Installing
+### Installing <a name = "install"></a>
 
 1. Clone the repo
    ```sh
