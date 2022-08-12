@@ -50,13 +50,13 @@ exports.delete = (req, res) => {
                 });
             } else {
                 res.send({
-                    message: `Cannot delete Bookmark with id=${id}. Maybe Bookmark was not found!`
+                    message: `Cannot delete bookmark with id=${id}. Maybe bookmark was not found!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete Bookmark with id=" + id
+                message: "Could not delete bookmark with id=" + id
             });
         });
 };
